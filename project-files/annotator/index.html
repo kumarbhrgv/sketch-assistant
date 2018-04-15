@@ -1,0 +1,96 @@
+<html>
+<head>
+	<style>
+	img{
+		width:300px;
+		height:300px;
+		border: 1px solid black;
+	}
+	li{
+		list-style: none;
+	}
+</style>
+</head>
+<body>
+	<h1>
+		Sketch Assistant Image Annotator
+	</h1>
+	<div id="annotator">
+		<div id="control">
+			<ul id="checkboxes">
+				<li>
+					<input name="head" type="checkbox">
+					<label for="head">
+						head
+					</label>
+
+				</li>
+				<li>
+					<input name="beak" type="checkbox">
+					<label for="beak">
+						beak
+					</label>
+
+				</li>
+				<li>
+					<input name="wing" type="checkbox">
+					<label for="wing">
+						wind
+					</label>
+
+				</li>
+				<li>
+					<input name="tail" type="checkbox">
+					<label for="tail">
+						tail
+					</label>
+
+				</li>
+				<li>
+					<input name="body" type="checkbox">
+					<label for="body">
+						body
+					</label>
+
+				</li>
+				<li>
+					<input name="leg" type="checkbox">
+					<label for="leg">
+						leg
+					</label>
+
+				</li>
+				<li>
+					<input name="full" type="checkbox">
+					<label for="full">
+						full
+					</label>
+
+				</li>
+				<li>
+					<input name="eyes" type="checkbox">
+					<label for="eyes">
+						eyes
+					</label>
+				</li>
+			</ul>
+			<button id="prev_button">
+				Previous
+			</button>
+			<button id="next_button">
+				Next
+			</button>
+		</div>
+	
+		<p id="current_annotation">
+		</p>
+
+		<div id="image">
+			<img id="img" src="assets/0left_1.png" alt="">
+		</div>
+	</div>
+	<!-- Libraries -->
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>

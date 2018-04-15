@@ -181,8 +181,8 @@ if __name__ == "__main__":
         images.append(image)
         images_attr.append(np.array((df.iloc[df.index[df["file"] == filename].tolist()].values[0])[1:]))
         #change here to adjust train data len
-        if len(images) == 500:
-            break
+        #if len(images) == 150:
+        #    break
     del df
     import gc
     gc.collect()
@@ -190,5 +190,5 @@ if __name__ == "__main__":
     y_train = images_attr[:500]
     print("Train : " ,len(x_train))
     model = DCGan()
-    model.fit(x_train,y_train,100,10)
+    model.fit(x_train,y_train,20,50)
     model.generate_image_from_text(np.array(y_train[0]).reshape(1,9)).show()
