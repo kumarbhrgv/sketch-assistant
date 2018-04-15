@@ -24,7 +24,7 @@ def combine_normalized_images(generated_images):
     for index, img in enumerate(generated_images):
         i = int(index / width)
         j = index % width
-        img = img.reshape(200,200)
+        img = img.reshape(128,128)
         image[i * shape[0]:(i + 1) * shape[0], j * shape[1]:(j + 1) * shape[1] :] = img
     return image
 
@@ -45,14 +45,14 @@ class DCGan(object):
 
     def create_model(self):
         #init
-        init_img_width = 200 // 4
-        init_img_height = 200 // 4
+        init_img_width = 128 // 4
+        init_img_height = 128 // 4
 
         #generator input
         random_input = Input(shape=(9,))
         text_input1 = Input(shape=(9,))
-        random_dense = Dense(400)(random_input)
-        text_layer1 = Dense(400)(text_input1)
+        random_dense = Dense(512)(random_input)
+        text_layer1 = Dense(512)(text_input1)
         merged = concatenate([random_dense, text_layer1])
 
         #generator layet
@@ -75,8 +75,8 @@ class DCGan(object):
 
         # Discriminator layer
         text_input2 = Input(shape=(9,))
-        text_layer2 = Dense(200)(text_input2)
-        img_input2 = Input(shape=(200, 200,1))
+        text_layer2 = Dense(512)(text_input2)
+        img_input2 = Input(shape=(128, 128,1))
         img_layer2 = Conv2D(64, kernel_size=(10, 10), padding='same')(
             img_input2)
         img_layer2 = Activation('tanh')(img_layer2)
@@ -85,7 +85,7 @@ class DCGan(object):
         img_layer2 = Activation('tanh')(img_layer2)
         img_layer2 = MaxPooling2D(pool_size=(2, 2))(img_layer2)
         img_layer2 = Flatten()(img_layer2)
-        img_layer2 = Dense(200)(img_layer2)
+        img_layer2 = Dense(128)(img_layer2)
         merged = concatenate([img_layer2, text_layer2])
         discriminator_layer = Activation('tanh')(merged)
         discriminator_layer = Dense(1)(discriminator_layer)
@@ -155,7 +155,7 @@ class DCGan(object):
         noise = np.zeros(shape=(1,9))
         generated_images = self.generator.predict([noise, text], verbose=0)
         generated_image = generated_images[0]
-        generated_image = generated_image.reshape(200,200)
+        generated_image = generated_image.reshape(128,128)
         return Image.fromarray(generated_image.astype(np.uint8))
 
     def save_snapshots(self, generated_images, epoch, batch_index, snapshot_dir_path="./left_!/snap/"):
@@ -165,7 +165,7 @@ class DCGan(object):
 
 
 if __name__ == "__main__":
-    image_dir1 = os.getcwd() + "/left_!/path_png_resize_updated/"
+    image_dir1 = os.getcwd() + "/left_!/data/"
     images = []
     images_attr = []
     df = pandas.read_csv(os.getcwd() + "/path_annotations_updated.csv")
@@ -181,8 +181,13 @@ if __name__ == "__main__":
         images.append(image)
         images_attr.append(np.array((df.iloc[df.index[df["file"] == filename].tolist()].values[0])[1:]))
         #change here to adjust train data len
+<<<<<<< HEAD
         #if len(images) == 150:
         #    break
+=======
+        if len(images) == 501:
+            break
+>>>>>>> ce7f40629e9e7fc211d66ba82ed534d2553f64c1
     del df
     import gc
     gc.collect()
@@ -190,5 +195,9 @@ if __name__ == "__main__":
     y_train = images_attr[:500]
     print("Train : " ,len(x_train))
     model = DCGan()
+<<<<<<< HEAD
     model.fit(x_train,y_train,20,50)
+=======
+    model.fit(x_train,y_train,10,50)
+>>>>>>> ce7f40629e9e7fc211d66ba82ed534d2553f64c1
     model.generate_image_from_text(np.array(y_train[0]).reshape(1,9)).show()
