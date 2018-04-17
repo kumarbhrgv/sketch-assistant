@@ -15,10 +15,10 @@ jQuery(document).ready(function($) {
     url: dir,
     success: function (data) {
         $(data).find("a:contains(" + fileextension + ")").each(function () {
-        	var filename = this.href.replace(window.location.host, "").replace("http://", "");
-        	filenames.push(filename)
+        	var filename = this.text
+        	filenames.push("/"+filename)
         });
-        
+
         // update the label
         readCheckboxes()
     	showAnnotationsLabel()
@@ -28,9 +28,7 @@ jQuery(document).ready(function($) {
     // when checking a box
 
     $("#checkboxes input").change(function(event) {
-
-
-    	// read checkboxes 
+        // read checkboxes
     	readCheckboxes()
 
 		// update the label
@@ -85,15 +83,23 @@ jQuery(document).ready(function($) {
 	function updateUI(){
 
 		if(annotations[currentIndex] == null){
-			readCheckboxes()
+			clearCheckboxes()
+            readCheckboxes()
 		}else{
 			showCheckboxes()
 		}
 		showAnnotationsLabel()
 		showImage()
-
+		console.log(annotations[currentIndex-1])
 	}
 
+	function  clearCheckboxes() {
+		$("#checkboxes input").each(function () {
+            if($(this).prop('checked') == true) {
+                $(this).prop('checked', false);
+            }
+        })
+    }
 	function readCheckboxes(){
 
     	currentAnnotations = []
@@ -105,6 +111,7 @@ jQuery(document).ready(function($) {
 		});
 
 		annotations[currentIndex] = currentAnnotations
+
 	}
 
 	function showAnnotationsLabel(){
@@ -119,10 +126,10 @@ jQuery(document).ready(function($) {
 
 		$("#checkboxes input").each(function(index, el) {
 			if(annotations[currentIndex][index] == 1){
-				$(this).attr('checked', 'true');
+				$(this).attr('checked', true);
 			}else{
-				$(this).attr('checked', 'false');
-				$(this).removeAttr('checked')
+				$(this).prop('checked', false);
+				//$(this).removeAttr('checked')
 			}
 		});
 	}
