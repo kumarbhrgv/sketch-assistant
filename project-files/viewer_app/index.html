@@ -4,72 +4,110 @@
 	<style>
 	#messagesBox{
 		height:400px;
-		width:250px;
-		border:1px solid black;
+		border:1px solid grey;
 		overflow-y: scroll;
+		background: white;
 	}
 	.message{
-		border-radius: 5px;
-		padding:5px;
+		border-radius: 10px;
+		border-bottom-left-radius: 0px;
+		padding:5px 10px;
 		display: inline-block;
 		background: lightgrey;
 		margin-left: 10px;
+		background-color: #2c4be8;
+		color:white;
 	}
 	#controlls{
 		margin-top: 10px;
+		width:100%;
+
 	}
 	#controlls *{
 		height:50px;
+	}
+	#chatContainer{
+		border: 2px solid grey;
+		display: inline-block;
+		padding:20px;
+		background: lightgrey;
+		border-radius: 5px;
+		width:350px;
+		margin-top:20px;
+	}
+	#textField{
+		padding-left:10px;
+	}
+	#sendBtn{
+		margin-left: 10px;
+	}
+	.container{
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h1>
-		Sketch Assistant
-	</h1>
-	<div id="messagesBox">
-		<img class="sketch" src="assets/4left_200.png">
-		<p class="message">
-			bird
-		</p>
-		<img class="sketch" src="assets/4left_200.png">
-		<p class="message">
-			bird
-		</p>
-		<img class="sketch" src="assets/4left_200.png">
-		<p class="message">
-			bird
-		</p>
-	</div>
-	<div id="controlls">
-		<input type="text" id="textField" placeholder="write a sketch part">
-		<button id="sendBtn" onclick="sendBtnClicked()">
-			Send
-		</button>
-	</div>
-	<!--///////////// SCRIPTS /////////////-->
-	<script src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script>
-		function sendBtnClicked(){
+		<div id="chatContainer">
+			<h3 class="text-center">
+				Sketch Assistant
+			</h3>
+			<div id="messagesBox">
+			</div>
+			<div id="controlls" class="form-group form-inline">
+				<input class="form-control" type="text" id="textField" placeholder="write a sketch part">
+				<button class="btn btn-primary" id="sendBtn" onclick="sendBtnClicked()">
+					Send
+				</button>
+			</div>
+		</div>
+		<!--///////////// SCRIPTS /////////////-->
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script>
+			function sendBtnClicked(){
 
 			// append the text 
 
 			var text = $("#textField").val()
 			
 			if (text){
+
+				// clear text field 
+
+				$("#textField").val("")
+				
+				// append text 
+
 				var htmlText = "<br/><p class='message'>"+text+"</p>"
 				$("#messagesBox").append(htmlText)
+
+
+				// call image and append it
+
+				var imageURL = "assets/4left_200.png"
+				var htmlImage = "<br/><img class='sketch' src='assets/4left_200.png'>"
+				$("#messagesBox").append(htmlImage)
 
 			}
 
 			// scrolll to the bottom
 
 			$("#messagesBox").animate({ scrollTop: 100000 }, "slow");
+			}
+
+			// Press enter when writing to the text field
+
+			$("#textField").keypress(function(event) {
+				console.log(event.key)
+				if (event.key === "Enter"){
+					$("#sendBtn").click()
+				}
+			});
 
 
-		}
 	</script>
 </body>
-	</div>
+</div>
 </html>
