@@ -1,0 +1,75 @@
+<html>
+<head>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<style>
+	#messagesBox{
+		height:400px;
+		width:250px;
+		border:1px solid black;
+		overflow-y: scroll;
+	}
+	.message{
+		border-radius: 5px;
+		padding:5px;
+		display: inline-block;
+		background: lightgrey;
+		margin-left: 10px;
+	}
+	#controlls{
+		margin-top: 10px;
+	}
+	#controlls *{
+		height:50px;
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>
+		Sketch Assistant
+	</h1>
+	<div id="messagesBox">
+		<img class="sketch" src="assets/4left_200.png">
+		<p class="message">
+			bird
+		</p>
+		<img class="sketch" src="assets/4left_200.png">
+		<p class="message">
+			bird
+		</p>
+		<img class="sketch" src="assets/4left_200.png">
+		<p class="message">
+			bird
+		</p>
+	</div>
+	<div id="controlls">
+		<input type="text" id="textField" placeholder="write a sketch part">
+		<button id="sendBtn" onclick="sendBtnClicked()">
+			Send
+		</button>
+	</div>
+	<!--///////////// SCRIPTS /////////////-->
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script>
+		function sendBtnClicked(){
+
+			// append the text 
+
+			var text = $("#textField").val()
+			
+			if (text){
+				var htmlText = "<br/><p class='message'>"+text+"</p>"
+				$("#messagesBox").append(htmlText)
+
+			}
+
+			// scrolll to the bottom
+
+			$("#messagesBox").animate({ scrollTop: 100000 }, "slow");
+
+
+		}
+	</script>
+</body>
+	</div>
+</html>
