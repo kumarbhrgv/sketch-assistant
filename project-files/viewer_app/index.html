@@ -1,6 +1,7 @@
 <html>
 <head>
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bower_components/SpinKit/css/spinkit.css">
 	<style>
 	#messagesBox{
 		height:400px;
@@ -12,8 +13,7 @@
 		border-radius: 10px;
 		border-bottom-left-radius: 0px;
 		padding:5px 10px;
-		display: inline-block;
-		background: lightgrey;
+		display: inline-block; background: lightgrey;
 		margin-left: 10px;
 		background-color: #2c4be8;
 		color:white;
@@ -63,6 +63,8 @@
 				</button>
 			</div>
 		</div>
+		<!-- Instructions -->
+		<br>
 		<!--///////////// SCRIPTS /////////////-->
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script>
@@ -86,16 +88,37 @@
 
 				// call image and append it
 
-				var imageURL = "assets/4left_200.png"
-				var htmlImage = "<br/><img class='sketch' src='assets/4left_200.png'>"
-				$("#messagesBox").append(htmlImage)
+				var requestURL = "http://localhost:5000"
+
+				var jqxhr = $.ajax( requestURL )
+				.done(function(response) {
+					// stop loading
+					$()
+					// show image
+					//var imageURL = response
+					var imageURL = "assets/4left_202.png" height="200" width="200"
+					var htmlImage = "<br/><img class='sketch' src='assets/4left_200.png'>"
+					$("#messagesBox").append(htmlImage)
+					alert( "success" );
+				})
+				.fail(function(response) {
+					//stop loading
+					alert( "error" );
+				})
+
+				// Loading start
+
+
+
+
+				
 
 			}
 
 			// scrolll to the bottom
 
 			$("#messagesBox").animate({ scrollTop: 100000 }, "slow");
-			}
+		}
 
 			// Press enter when writing to the text field
 
@@ -106,8 +129,23 @@
 				}
 			});
 
+			// helper functions
 
-	</script>
-</body>
+			startLoading(){
+
+				let loadingHTML = `<div id="loading" class="sk-spinner-pulse"></div>`
+				$("#messagesBox").append(loadingHTML)
+
+			}
+
+			stopLoading(){
+
+				$("loading").remove()
+
+			}
+
+
+		</script>
+	</body>
 </div>
 </html>
