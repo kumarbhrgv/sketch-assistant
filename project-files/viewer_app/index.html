@@ -93,25 +93,20 @@
 				var jqxhr = $.ajax( requestURL )
 				.done(function(response) {
 					// stop loading
-					$()
 					// show image
-					//var imageURL = response
-					var imageURL = "assets/4left_202.png" height="200" width="200"
-					var htmlImage = "<br/><img class='sketch' src='assets/4left_200.png'>"
+					var imageURL = response
+					var htmlImage = "<br/><img class='sketch' src="+imageURL+">"
 					$("#messagesBox").append(htmlImage)
-					alert( "success" );
+					stopLoading()
 				})
 				.fail(function(response) {
 					//stop loading
 					alert( "error" );
+					stopLoading()
 				})
 
 				// Loading start
-
-
-
-
-				
+				startLoading()
 
 			}
 
